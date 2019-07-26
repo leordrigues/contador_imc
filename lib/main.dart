@@ -18,12 +18,12 @@ class _HomeState extends State<Home> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _infoText = "Informe seus dados!";
+
   void _resertFiekds() {
     weightController.text = "";
     heightController.text = "";
-    _infoText = "Informe seus dados!";
     setState(() {
-      _infoText = "Informe seus dados";
+      _infoText = "Informe seus dados!";
     });
   }
 
@@ -67,53 +67,66 @@ class _HomeState extends State<Home> {
         body: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
           child: Form(
-            key: _formKey,
+              key: _formKey,
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Icon(Icons.person, size: 120.0, color: Colors.deepOrange),
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    labelText: "Peso (kg)",
-                    labelStyle: TextStyle(color: Colors.deepOrange)),
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.deepOrange, fontSize: 25.0),
-                controller: weightController,
-                validator: (value){
-
-                },
-              ),
-              TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    labelText: "Altura (cm)",
-                    labelStyle: TextStyle(color: Colors.deepOrange)),
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.deepOrange, fontSize: 25.0),
-                controller: heightController,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: Container(
-                  height: 80.0,
-                  child: RaisedButton(
-                    onPressed: _calculate,
-                    child: Text(
-                      "Calcular",
-                      style: TextStyle(color: Colors.white, fontSize: 25.0),
-                    ),
-                    color: Colors.deepOrange,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Icon(Icons.person, size: 120.0, color: Colors.deepOrange),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: "Peso (kg)",
+                        labelStyle: TextStyle(color: Colors.deepOrange)),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.deepOrange, fontSize: 25.0),
+                    controller: weightController,
+                    // ignore: missing_return
+                    validator: (value) {
+                      if  (value.isEmpty){
+                        return "Insiera seu Peso!";
+                      }
+                    },
                   ),
-                ),
-              ),
-              Text(
-                _infoText,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.deepOrange, fontSize: 25.0),
-              )
-            ],
-          )),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: "Altura (cm)",
+                        labelStyle: TextStyle(color: Colors.deepOrange)),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.deepOrange, fontSize: 25.0),
+                    controller: heightController,
+                    // ignore: missing_return
+                    validator: (value) {
+                      if  (value.isEmpty){
+                        return "Insiera sua Altura!";
+                      }
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    child: Container(
+                      height: 80.0,
+                      child: RaisedButton(
+                        onPressed: (){
+                          if(_formKey.currentState.validate()){
+                            _calculate();
+                          }
+                        },
+                        child: Text(
+                          "Calcular",
+                          style: TextStyle(color: Colors.white, fontSize: 25.0),
+                        ),
+                        color: Colors.deepOrange,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    _infoText,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.deepOrange, fontSize: 25.0),
+                  )
+                ],
+              )),
         ));
   }
 }
